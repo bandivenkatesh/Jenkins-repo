@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        MAVEN_HOME = tool 'M3' // Adjust to your Maven installations
-        JAVA_HOME = tool 'JDK17' // Adjust to your JDK installations
+        MAVEN_HOME = tool 'M3' // Adjust to your Maven installation
+        JAVA_HOME = tool 'JDK17' // Adjust to your JDK installation
     }
 
     stages {
@@ -24,7 +24,7 @@ pipeline {
         stage('Static Code Analysis') {
             steps {
                 script {
-                    // Run Maven's checkstyle or PMD plugin
+                    // Run Maven's checkstyle plugin
                     sh './mvnw checkstyle:check'
                 }
             }
@@ -41,7 +41,7 @@ pipeline {
         stage('Code Linting and Formatting') {
             steps {
                 script {
-                    // Use Spotless or similar for formatting
+                    // Use Spotless or a similar tool for formatting
                     sh './mvnw spotless:apply'
                 }
             }
@@ -76,7 +76,7 @@ pipeline {
             steps {
                 script {
                     // Deploy using Docker Compose
-                    sh 'docker-compose --profile mysql up -d'
+                    sh 'docker-compose up -d'
                 }
             }
         }
