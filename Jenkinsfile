@@ -23,11 +23,14 @@ pipeline {
                     // Clone the repository
                     git 'https://github.com/bandivenkatesh/spring-petclinic-own.git'
 
-                    // Build the Java application
-                    sh 'mvn clean package'
+                    // Change directory to the cloned repository
+                    dir('spring-petclinic-own') {
+                        // Build the Java application using Maven
+                        sh 'mvn clean package'
 
-                    // Build the Docker image with a specific name and tag
-                    docker.build("${imageName}:${imageTag}")
+                        // Build the Docker image with a specific name and tag
+                        docker.build("${imageName}:${imageTag}")
+                    }
                 }
             }
         }
