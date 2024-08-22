@@ -7,16 +7,18 @@ pipeline {
                 echo 'Hello-World'
             }
         }
-        stage ('step-two') {
-             steps {
-              hostname
+        stage('step-two') {
+            steps {
+                sh 'hostname'
             }
-          stage ('step-three') {
-              steps {
-                wget https://github.com/bandivenkatesh/spring-petclinic-own.git
-                cd spring-petclinic-own
-              }
-          }
+        }
+        stage('step-three') {
+            steps {
+                sh '''
+                    wget https://github.com/bandivenkatesh/spring-petclinic-own.git
+                    cd spring-petclinic-own
+                '''
+            }
         }
     }
 }
