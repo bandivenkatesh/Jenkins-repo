@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        MAVEN_HOME = tool 'M3' // Adjust to your Maven installation
-        JAVA_HOME = tool 'JDK17' // Adjust to your JDK installation
+        MAVEN_HOME = tool 'M3' // Ensure this matches your Maven installation name
+        JAVA_HOME = tool 'JDK17' // Ensure this matches your JDK installation name
     }
 
     stages {
@@ -15,14 +15,12 @@ pipeline {
 
         stage('Environment Setup') {
             steps {
-                // No specific setup needed for Maven projects
                 echo 'Environment setup complete'
             }
         }
 
         stage('Static Code Analysis') {
             steps {
-                // Run Maven's checkstyle plugin
                 sh './mvnw checkstyle:check'
             }
         }
@@ -35,14 +33,12 @@ pipeline {
 
         stage('Code Linting and Formatting') {
             steps {
-                // Use Spotless or a similar tool for formatting
                 sh './mvnw spotless:apply'
             }
         }
 
         stage('Integration Testing') {
             steps {
-                // Run integration tests
                 sh './mvnw verify -Pintegration'
             }
         }
@@ -61,14 +57,12 @@ pipeline {
 
         stage('Deployment to Staging Environment') {
             steps {
-                // Deploy using Docker Compose
                 sh 'docker-compose up -d'
             }
         }
 
         stage('Automated UI Testing') {
             steps {
-                // Placeholder for UI testing
                 echo 'Run UI tests with Selenium or similar'
             }
         }
@@ -81,14 +75,12 @@ pipeline {
 
         stage('Performance Testing') {
             steps {
-                // Placeholder for performance testing
                 echo 'Run performance tests with JMeter or similar'
             }
         }
 
         stage('Security Scanning') {
             steps {
-                // Placeholder for security scanning
                 echo 'Run security scans with OWASP ZAP or similar'
             }
         }
@@ -96,8 +88,10 @@ pipeline {
 
     post {
         always {
-            archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true
-            junit 'target/surefire-reports/*.xml'
+            node {
+                archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true
+                junit 'target/surefire-reports/*.xml'
+            }
         }
     }
 }
