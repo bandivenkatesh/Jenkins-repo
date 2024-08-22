@@ -17,24 +17,45 @@ pipeline {
                 sh 'hostname'
             }
         }
-        stage('step-three') {
+        stage('Clone Repository') {
             steps {
                 script {
-                    // Clone the repository
                     git 'https://github.com/bandivenkatesh/spring-petclinic-own.git'
-
-                    // Change directory to the cloned repository
+                }
+            }
+        }
+        stage('Build Java Application') {
+            steps {
+                script {
                     dir('spring-petclinic-own') {
-                        // Build the Java application using Maven
                         sh 'mvn clean package'
-
-                        // Build the Docker image with a specific name and tag
+                    }
+                }
+            }
+        }
+        stage('Run Tests') {
+            steps {
+                script {
+                    dir('spring-petclinic-own') {
+                        sh 'mvn test'
+                    }
+                }
+            }
+        }
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    dir('spring-petclinic-own') {
                         docker.build("${imageName}:${imageTag}")
                     }
                 }
             }
         }
+        stage('Clean Up') {
+            steps {
+                echo 'Cleaning up workspace...'
+                cleanWs()
+            }
+        }
     }
 }
-// this is a practise pipeline
-// updating for trigerring build in jenkins
