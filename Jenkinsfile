@@ -12,14 +12,6 @@ pipeline {
                 sh 'hostname'
             }
         }
-        stage('step-three') {
-            steps {
-                sh '''
-                    wget https://github.com/bandivenkatesh/spring-petclinic-own.git
-                    cd spring-petclinic-own
-                '''
-            }
-        }
     }
 }
 // this is a practise pipeline
