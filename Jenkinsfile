@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        MAVEN_HOME = tool 'M3' // Adjust to your Maven installation
-        JAVA_HOME = tool 'JDK17' // Adjust to your JDK installation
+        MAVEN_HOME = tool 'M3' // Adjust to your Maven installations
+        JAVA_HOME = tool 'JDK17' // Adjust to your JDK installations
     }
 
     stages {
