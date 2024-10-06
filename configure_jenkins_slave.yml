@@ -1,0 +1,11 @@
+---
+- name: Configure Jenkins Slave
+  hosts: jenkins-slave
+  become: yes
+  tasks:
+    - name: Install Java (required for slave)
+      apt:
+        name: openjdk-11-jdk
+        state: present
+
+    # Additional tasks for configuring slave can be added here.
